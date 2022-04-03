@@ -56,6 +56,8 @@ export const Icon = (props) => {
         img = img_power;
     } else if (props.name === "edit") {
         img = "/assets/icons/edit.svg";
+    } else if (props.name === "download") {
+        img = "/assets/icons/download.svg";
     } else if (props.name === "delete") {
         img = "/assets/icons/delete.svg";
     } else if (props.name === "share") {

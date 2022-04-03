@@ -235,6 +235,14 @@ class ExistingThingComponent extends React.Component {
         );
     }
 
+    onClickDownload() {
+        const url = "/api/files/cat?path="+encodeURIComponent(this.props.file.path);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", this.props.file.name);
+        link.click();
+    }
+
     onThingClick(e) {
         if (e.ctrlKey === true) {
             e.preventDefault();
@@ -306,7 +314,9 @@ class ExistingThingComponent extends React.Component {
                             onClickRename={this.onRenameRequest.bind(this)}
                             onClickDelete={this.onDeleteRequest.bind(this)}
                             onClickShare={this.onShareRequest.bind(this)}
+                            onClickDownload={this.onClickDownload.bind(this)}
                             is_renaming={this.state.is_renaming}
+                            can_download={true}
                             can_rename={this.props.metadata.can_rename !== false}
                             can_delete={this.props.metadata.can_delete !== false}
                             can_share={this.props.metadata.can_share !== false && window.CONFIG.enable_share === true} />
@@ -415,6 +425,11 @@ class Filename extends React.Component {
 }
 
 const ActionButton = (props) => {
+    const onDownload = (e) => {
+        e.preventDefault();
+        props.onClickDownload();
+    };
+
     const onRename = (e) => {
         e.preventDefault();
         props.onClickRename();
@@ -432,6 +447,14 @@ const ActionButton = (props) => {
 
     return (
         <div className="component_action">
+            <NgIf
+                type="inline"
+                cond={props.can_download !== false}>
+                <Icon
+                    name="download"
+                    onClick={onDownload}
+                    className="component_updater--icon" />
+            </NgIf>
             <NgIf
                 type="inline"
                 cond={props.can_rename !== false && props.is_renaming === false}>
