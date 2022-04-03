@@ -284,7 +284,6 @@ class ExistingThingComponent extends React.Component {
             .replace(/\%/g, "%2525") // Hack to get the Link Component to work
             .replace(/\?/g, "%3F")
             .replace(/\#/g, "%23");
-
         return connectDragSource(connectDropNativeFile(connectDropFile(
             <div className={"component_thing view-"+this.props.view+(this.props.selected === true ? " selected" : " not-selected")}>
                 <ToggleableLink
@@ -316,7 +315,7 @@ class ExistingThingComponent extends React.Component {
                             onClickShare={this.onShareRequest.bind(this)}
                             onClickDownload={this.onClickDownload.bind(this)}
                             is_renaming={this.state.is_renaming}
-                            can_download={true}
+                            can_download={this.props.file.type === "directory" ? false : true }
                             can_rename={this.props.metadata.can_rename !== false}
                             can_delete={this.props.metadata.can_delete !== false}
                             can_share={this.props.metadata.can_share !== false && window.CONFIG.enable_share === true} />
